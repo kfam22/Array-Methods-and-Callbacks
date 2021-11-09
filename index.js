@@ -83,11 +83,21 @@ hint: the strings returned need to exactly match the string in step 4.
  */
 // 4 parameters, (array getfinalscv, getyearscb, getwinnerscb) use map - map over one array and grab each item , then use index to grab the item in the other array
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
+function getWinnersByYear(array, getfinalscb, getyearscb, getwinnerscb) {
+    const winners = getwinnerscb(array, getfinalscb);
+    const years = getyearscb(array, getfinalscb);
+    const winnersByYear = winners.map((item, index) => `In ${years[index]}, ${item} won the world cup!`)
+    return winnersByYear
 }
 
+console.log(getWinnersByYear(fifaData, getFinals, getYears, getWinners));
 
+// function getWinnersByYear(array, getfinalscb, getyearscb, getwinnerscb) {
+//     const winners = getwinnerscb(array, getfinalscb)
+//     const years = getyearscb(array, getfinalscb)
+//     const winnersByYear = winners.map((item, index) => `In ${years[index]}, ${item} won the world cup!`)
+//     return winnersByYear
+// }
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher order function getAverageGoals to do the following: 
@@ -100,10 +110,14 @@ Use the higher order function getAverageGoals to do the following:
 */
 //parameter(getfinalscb), use reduce to add up all the goals of home and away team. divide that number by the lenght of the array. round 2 decimal places **hint look up .toFixed
 
-function getAverageGoals(/* code here */) {
-   /* code here */
+function getAverageGoals(getfinalscb) {
+   const avgGoals = getfinalscb.reduce((acc, item) => {
+       return acc + item['Home Team Goals'] + item['Away Team Goals']
+    }, 0)
+    return (avgGoals / getfinalscb.length).toFixed(2);
 }
 
+console.log('average goals:', getAverageGoals(getFinals(fifaData)));
 
 // getAverageGoals(getFinals(FifaData))
 
