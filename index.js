@@ -4,17 +4,18 @@ const { fifaData } = require('./fifa.js')
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 1: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Practice accessing data by console.log-ing the following pieces of data note, you may want to filter the data first 😉*/
-
-//(a) Home Team name for 2014 world cup final
-
-//(b) Away Team name for 2014 world cup final
-
-//(c) Home Team goals for 2014 world cup final
-
-//(d) Away Team goals for 2014 world cup final
-
-//(e) Winner of 2014 world cup final */
-
+// const finals2014 = fifaData.filter(item => item.Stage === 'Final' && item.Year === 2014);
+// console.log('2014 finals data:', finals2014);
+// //(a) Home Team name for 2014 world cup final
+// console.log('2014 finals home team name:', finals2014[0]['Home Team Name']);
+// //(b) Away Team name for 2014 world cup final
+// console.log('2014 finals away team name:', finals2014[0]['Away Team Name']);
+// //(c) Home Team goals for 2014 world cup final
+// console.log('2014 finals home team goals:', finals2014[0]['Home Team Goals']);
+// //(d) Away Team goals for 2014 world cup final
+// console.log('2014 finals away team goals:', finals2014[0]['Away Team Goals']);
+// //(e) Winner of 2014 world cup final */
+// console.log('2014 finals winner:', finals2014[0]['Win conditions']);
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 2: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Use getFinals to do the following:
@@ -24,10 +25,12 @@ Use getFinals to do the following:
 hint - you should be looking at the stage key inside of the objects
 */
 
-function getFinals(/* code here */) {
-   /* code here */
-}
 
+function getFinals(data) {
+   const finalsData = data.filter(item => item.Stage === 'Final')
+   return finalsData;
+}
+// console.log('final stage teams:', getFinals(fifaData));
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 3: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -35,10 +38,14 @@ Use the higher-order function called getYears to do the following:
 1. Receive an array
 2. Receive a callback function getFinals from task 2 
 3. Return an array called years containing all of the years in the getFinals data set*/
+// 2 parameters array/ getFinalscb, map over restults of getFinalscb to get all the years
 
-function getYears(/* code here */) {
-    /* code here */
+function getYears(array, cb) {
+    const years = cb(array).map(item => item.Year)
+    return years
 }
+
+// console.log('finals data years:', getYears(fifaData, getFinals));
 
 
 
@@ -48,12 +55,20 @@ Use the higher-order function getWinners to do the following:
 2. Receives the callback function getFinals from task 2 
 3. Determines the winner (home or away) of each `finals` game. 
 4. Returns the names of all winning countries in an array called `winners` */ 
+// 2 parameters (array, getFinalscb) use map, use a conditional if home team goals > away team goals, return home team name else return away team name
 
-function getWinners(/* code here */) {
-    /* code here */
+function getWinners(array, cb) {
+    const winners = cb(array).map(item =>{
+        if(item["Home Team Goals"] > item["Away Team Goals"]){
+            return item["Home Team Name"];
+        } else{
+            return item["Away Team Name"];
+        }
+    });
+    return winners
 }
 
-
+// console.log('winners:', getWinners(fifaData, getFinals));
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Use the higher-order function getWinnersByYear to do the following:
@@ -63,8 +78,10 @@ Use the higher-order function getWinnersByYear to do the following:
 4. Receive a callback function getWinners from task 4
 5. Return an array of strings that say "In {year}, {country} won the world cup!" 
 
+
 hint: the strings returned need to exactly match the string in step 4.
  */
+// 4 parameters, (array getfinalscv, getyearscb, getwinnerscb) use map - map over one array and grab each item , then use index to grab the item in the other array
 
 function getWinnersByYear(/* code here */) {
     /* code here */
@@ -81,13 +98,14 @@ Use the higher order function getAverageGoals to do the following:
  
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
+//parameter(getfinalscb), use reduce to add up all the goals of home and away team. divide that number by the lenght of the array. round 2 decimal places **hint look up .toFixed
 
 function getAverageGoals(/* code here */) {
    /* code here */
 }
 
 
-
+// getAverageGoals(getFinals(FifaData))
 
 /// 🥅 STRETCH 🥅 ///
 
